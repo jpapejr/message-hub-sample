@@ -32,3 +32,6 @@ node_modules
 .tern-project
 .jshintrc
 .travis.yml
+
+
+vcap_services.json
