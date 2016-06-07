@@ -1,0 +1,28 @@
+{
+  "name": "messaging-test",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "producer": "node producer.js",
+    "consumer": "node consumer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpapejr/messaging-test"
+  },
+  "keywords": ["kafka","message-hub","bluemix", "mqlight"] ,
+  "author": "John Pape",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jpapejr/messaging-test/issues"
+  },
+  "homepage": "https://github.com/jpapejr/messaging-test",
+  "dependencies": {
+    "ava": "0.0.4",
+    "mqlight": "1.0.x",
+    "cfenv": "1.0.x"
+  },
+  "devDependencies": {}
+}
