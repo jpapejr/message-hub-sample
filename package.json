@@ -6,7 +6,9 @@
   "scripts": {
     "test": "node test.js",
     "producer": "node producer.js",
-    "consumer": "node consumer.js"
+    "consumer": "node consumer.js",
+    "mh-consumer": "node mh-consumer",
+    "mh-producer": "node mh-producer"
   },
   "repository": {
     "type": "git",
@@ -22,7 +24,9 @@
   "dependencies": {
     "ava": "0.0.4",
     "mqlight": "1.0.x",
-    "cfenv": "1.0.x"
+    "cfenv": "1.0.x",
+    "request": "2.72.x",
+    "uuid": "2.0.x"
   },
   "devDependencies": {}
 }

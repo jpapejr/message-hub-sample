@@ -1,22 +1,24 @@
 'use strict';
 
-var appEnv      = require('cfenv').getAppEnv();
 var mqlight     = require('mqlight');
+var service     = require('./servicekey.json');
+var request     = require('request');
+var uuid        = require('uuid');
 
-if (appEnv.isLocal){
-  console.log('Running locally..');
-  var services = require('./vcap_services.json');
-} else {
-  console.log('Running in CF..');
-}
+request(service.credentials.connectionLookupURI, function(err, resp, body){
+  if (!err && resp.statusCode === 200){
+    var payload = JSON.parse(body);
+    payload.user = service.credentials.username;
+    payload.password = service.credentials.password;
+    payload.id = ('test_' + uuid.v4()).replace(/-/g, '_');
+    var sendClient = mqlight.createClient(payload);
 
-var sendClient = mqlight.createClient({service: ['amqps://mqlightprod-ag-00020a.services.dal.bluemix.net:2912','amqps://mqlightprod-ag-00020b.services.dal.bluemix.net:2912'],
-  user: 'MnFDpFPdNVSV', password: ']v/pXq\'b2)Ay'});
-
-var topic = 'public';
-sendClient.on('started', function() {
-  sendClient.send(topic, 'Hello World!', function (err, data) {
-    console.log('Sent: %s', data);
-    sendClient.stop();
-  });
+    var topic = 'testTopic';
+    sendClient.on('started', function() {
+      sendClient.send(topic, 'Hello World!', function (err, data) {
+        console.log('Sent: %s', data);
+        sendClient.stop();
+      });
+    });
+  }
 });

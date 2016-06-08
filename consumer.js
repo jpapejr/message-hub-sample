@@ -1,22 +1,24 @@
 'use strict';
 
-var appEnv      = require('cfenv').getAppEnv();
 var mqlight     = require('mqlight');
+var service     = require('./servicekey.json');
+var request     = require('request');
+var uuid        = require('uuid');
 
-if (appEnv.isLocal){
-  console.log('Running locally..');
-  var services = require('./vcap_services.json');
-} else {
-  console.log('Running in CF..');
-}
+request(service.credentials.connectionLookupURI, function(err, resp, body){
+  if (!err && resp.statusCode === 200){
+    var payload = JSON.parse(body);
+    payload.user = service.credentials.username;
+    payload.password = service.credentials.password;
+    payload.id = ('test_' + uuid.v4()).replace(/-/g, '_');
+    var recvClient = mqlight.createClient(payload);
 
-var recvClient = mqlight.createClient({service: ['amqps://mqlightprod-ag-00020a.services.dal.bluemix.net:2912','amqps://mqlightprod-ag-00020b.services.dal.bluemix.net:2912'],
-  user: 'MnFDpFPdNVSV', password: ']v/pXq\'b2)Ay'});
-
-var topicPattern = 'public';
-recvClient.on('started', function() {
-  recvClient.subscribe(topicPattern, 'share1');
-  recvClient.on('message', function(data, delivery) {
-    console.log('Recv: %s', data);
-  });
+    var topicPattern = 'testTopic';
+    recvClient.on('started', function() {
+      recvClient.subscribe(topicPattern, 'share1');
+      recvClient.on('message', function(data) {
+        console.log('Recv: %s', data);
+      });
+    });
+  }
 });

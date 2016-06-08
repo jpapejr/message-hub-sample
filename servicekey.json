@@ -1,0 +1,9 @@
+{
+    "credentials": {
+        "password": "]v/pXq'b2)Ay",
+        "nonTLSConnectionLookupURI": "http://mqlightprod-lookup.ng.bluemix.net/Lookup?serviceId=ff2d8e8a-884a-48a4-ad5b-bf7ec4392faf",
+        "version": "2",
+        "connectionLookupURI": "http://mqlightprod-lookup.ng.bluemix.net/Lookup?serviceId=ff2d8e8a-884a-48a4-ad5b-bf7ec4392faf&tls=true",
+        "username": "MnFDpFPdNVSV"
+    }
+}
